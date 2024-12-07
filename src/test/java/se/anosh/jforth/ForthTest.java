@@ -74,5 +74,19 @@ public class ForthTest {
         forth.interpret("35 assert");
     }
 
+    @Test
+    void createWord() {
+        forth.interpret(": foo 10 32 + ;");
+        forth.interpret("foo 42 assert");
+    }
+
+    @Test
+    void wordInsideWord() {
+        forth.interpret(": foo 5 5 bar ;");
+        forth.interpret(": bar * ;");
+        forth.interpret("foo dup . 25 assert");
+    }
+
+
 
 }

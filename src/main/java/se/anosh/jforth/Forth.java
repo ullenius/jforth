@@ -34,14 +34,34 @@ public class Forth {
     }
 
     public void interpret(String code) {
-        String[] arr = code.split(" ");
-        for (String cmd : arr) {
-            if (dictionary.containsKey(cmd)) {
-                dictionary.get(cmd).run();
-            } else {
-                stack.push(Integer.parseInt(cmd));
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < code.length(); i++) {
+
+            char ch = code.charAt(i);
+            if (ch == ' ') {
+                if (!sb.isEmpty()) {
+                    interpretWord(sb.toString());
+                    sb = new StringBuilder();
+                }
+                continue; // skip to next char
             }
+            sb.append(code.charAt(i));
         }
+        interpretWord(sb.toString());
+    }
+
+    private void interpretWord(String word) {
+        if (dictionary.containsKey(word)) {
+            dictionary.get(word).run();
+        } else {
+            stack.push(Integer.parseInt(word));
+        }
+    }
+
+    public void createFunc(String func) {
+
+
     }
 
     // + ( n1, n2 -- sum )
