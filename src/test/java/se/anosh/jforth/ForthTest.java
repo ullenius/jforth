@@ -87,6 +87,22 @@ public class ForthTest {
         forth.interpret("foo dup . 25 assert");
     }
 
+    @Test
+    void division() {
+        forth.interpret("25 2 /");
+        forth.interpret("12 assert");
+    }
 
+    @Test
+    void modulo() {
+        forth.interpret("25 2 mod");
+        forth.interpret("1 assert");
+    }
+
+    @Test
+    void caseInsensitiveParsing() {
+        forth.interpret(": foo 42 10 * ;");
+        forth.interpret("FOO dup . 420 assert");
+    }
 
 }

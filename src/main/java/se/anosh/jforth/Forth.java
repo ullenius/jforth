@@ -28,8 +28,8 @@ public class Forth {
         ));
         dictionary.putAll(Map.of(
                 "*", this::multiply,
-                "/", NOOP,
-                "mod", NOOP
+                "/", this::division,
+                "mod", this::modulo
         ));
     }
 
@@ -101,6 +101,22 @@ public class Forth {
         int b = stack.pop();
         int product = a * b;
         stack.push(product);
+    }
+
+    // ( dividend, divisor -- quotient )
+    private void division() {
+        int divisor = stack.pop();
+        int dividend = stack.pop();
+        int quotient = dividend / divisor;
+        stack.push(quotient);
+    }
+
+    // ( dividend, divisor -- remainder )
+    private void modulo() {
+        int divisor = stack.pop();
+        int dividend = stack.pop();
+        int remainder = dividend % divisor;
+        stack.push(remainder);
     }
 
     // ( n -- )
