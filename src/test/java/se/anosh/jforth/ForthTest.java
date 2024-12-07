@@ -123,7 +123,5 @@ public class ForthTest {
         forth.interpret("255 assert");
     }
 
-    // abs, negate, min, max
-
 
 }

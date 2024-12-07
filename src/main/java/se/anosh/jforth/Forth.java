@@ -33,7 +33,8 @@ public final class Forth {
                 "/", this::division,
                 "mod", this::modulo,
                 "negate", this::negate,
-                "abs", this::abs
+                "abs", this::abs,
+                "cr", this::cr
         ));
     }
 
@@ -82,6 +83,11 @@ public final class Forth {
         } else {
             stack.push(Integer.parseInt(word));
         }
+    }
+
+    // ( -- )
+    private void cr() {
+        System.out.println();
     }
 
     // ( n -- n )
