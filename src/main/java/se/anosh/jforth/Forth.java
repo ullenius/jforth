@@ -8,6 +8,8 @@ public class Forth {
     private final Map<String, Runnable> dictionary;
     private final Deque<Integer> stack = new ArrayDeque<>();
 
+    private final Runnable NOOP = () -> {};
+
 
     public Forth() {
         dictionary = Map.of(
@@ -15,6 +17,9 @@ public class Forth {
                 ".", this::dot,
                 ".s", this::dotS,
                 "swap", this::swap,
+                "over", this::over,
+                "rot", this::rot,
+                "drop", this::drop,
                 "assert", this::assertEquals
 
         );
@@ -30,6 +35,27 @@ public class Forth {
                 stack.push(Integer.parseInt(cmd));
             }
         }
+    }
+
+    // ( n -- )
+    private void drop() {
+        stack.pop();
+    }
+
+    // ( n1, n2 -- n1, n2, n1 )
+    private void over() {
+        int a = stack.pop();
+        dup();
+        stack.push(a);
+        swap();
+    }
+
+    // (  n1, n2, n3 -- n2, n3, n1 )
+    private void rot() {
+        int a = stack.pop();
+        swap();
+        stack.push(a);
+        swap();
     }
 
     // . ( n -- )
