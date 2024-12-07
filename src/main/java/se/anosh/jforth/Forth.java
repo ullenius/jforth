@@ -72,8 +72,9 @@ public class Forth {
     }
 
     private void interpretWord(String word) {
-        if (dictionary.containsKey(word)) {
-            dictionary.get(word).run();
+        final String lowercaseWord = word.toLowerCase();
+        if (dictionary.containsKey(lowercaseWord)) {
+            dictionary.get(lowercaseWord).run();
         } else {
             stack.push(Integer.parseInt(word));
         }
