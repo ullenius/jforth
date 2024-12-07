@@ -8,11 +8,13 @@ public class Forth {
     private final Map<String, Runnable> dictionary;
     private final Deque<Integer> stack = new ArrayDeque<>();
 
-    private final Runnable NOOP = () -> {};
+    private final Runnable NOOP = () -> {
+    };
 
 
     public Forth() {
-        dictionary = Map.of(
+        dictionary = new HashMap<>();
+        dictionary.putAll(Map.of(
                 "dup", this::dup,
                 ".", this::dot,
                 ".s", this::dotS,
@@ -20,9 +22,15 @@ public class Forth {
                 "over", this::over,
                 "rot", this::rot,
                 "drop", this::drop,
+                "+", this::plus,
+                "-", this::minus,
                 "assert", this::assertEquals
-
-        );
+        ));
+        dictionary.putAll(Map.of(
+                "*", this::multiply,
+                "/", NOOP,
+                "mod", NOOP
+        ));
     }
 
     public void interpret(String code) {
@@ -30,11 +38,34 @@ public class Forth {
         for (String cmd : arr) {
             if (dictionary.containsKey(cmd)) {
                 dictionary.get(cmd).run();
-            }
-            else {
+            } else {
                 stack.push(Integer.parseInt(cmd));
             }
         }
+    }
+
+    // + ( n1, n2 -- sum )
+    private void plus() {
+        int a = stack.pop();
+        int b = stack.pop();
+        int sum = a + b;
+        stack.push(sum);
+    }
+
+    // - ( n1, n2 -- diff )
+    private void minus() {
+        int a = stack.pop();
+        int b = stack.pop();
+        int diff = b - a;
+        stack.push(diff);
+    }
+
+    // * ( n1, n2 -- product )
+    private void multiply() {
+        int a = stack.pop();
+        int b = stack.pop();
+        int product = a * b;
+        stack.push(product);
     }
 
     // ( n -- )
@@ -60,8 +91,8 @@ public class Forth {
 
     // . ( n -- )
     private void dot() {
-            int n = stack.pop();
-            System.out.printf("%d ", n);
+        int n = stack.pop();
+        System.out.printf("%d ", n);
     }
 
     // .s ( -- )

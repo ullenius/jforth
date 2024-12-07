@@ -56,5 +56,23 @@ public class ForthTest {
         forth.interpret("7 assert 5 assert 3 assert 2 assert"); // stack is not modified
     }
 
+    @Test
+    void plusWorks() {
+        forth.interpret("10 32 +");
+        forth.interpret("42 assert");
+    }
+
+    @Test
+    void minusWorks() {
+        forth.interpret("10 15 -");
+        forth.interpret("-5 assert");
+    }
+
+    @Test
+    void multiplication() {
+        forth.interpret("5 7 *");
+        forth.interpret("35 assert");
+    }
+
 
 }
