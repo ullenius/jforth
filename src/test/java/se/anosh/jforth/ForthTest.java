@@ -26,5 +26,17 @@ public class ForthTest {
         forth.interpret("3 assert");
     }
 
+    @Test
+    void swap() {
+        forth.interpret("2 3 swap");
+        forth.interpret("2 assert 3 assert");
+    }
+
+    @Test
+    void dotSWorks() {
+        forth.interpret("2 3 5 7 .s");
+        forth.interpret("7 assert 5 assert 3 assert 2 assert"); // stack is not modified
+    }
+
 
 }

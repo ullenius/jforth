@@ -1,9 +1,7 @@
 package se.anosh.jforth;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Forth {
 
@@ -15,6 +13,8 @@ public class Forth {
         dictionary = Map.of(
                 "dup", this::dup,
                 ".", this::dot,
+                ".s", this::dotS,
+                "swap", this::swap,
                 "assert", this::assertEquals
 
         );
@@ -32,10 +32,25 @@ public class Forth {
         }
     }
 
-    // ( n -- )
+    // . ( n -- )
     private void dot() {
             int n = stack.pop();
             System.out.printf("%d ", n);
+    }
+
+    // .s ( -- )
+    private void dotS() {
+        var all = new ArrayList<>(stack);
+        Collections.reverse(all);
+        System.out.println(all);
+    }
+
+    // ( n1, n2 -- n2, n1 )
+    private void swap() {
+        int n2 = stack.pop();
+        int n1 = stack.pop();
+        stack.push(n2);
+        stack.push(n1);
     }
 
     // ( n -- n, n )
