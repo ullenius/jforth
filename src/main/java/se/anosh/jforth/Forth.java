@@ -3,14 +3,16 @@ package se.anosh.jforth;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Forth {
+public final class Forth {
+
+    private static final char START_WORD_DEFINITION = ':';
+    private static final char END_WORD_DEFINITION = ';';
 
     private final Map<String, Runnable> dictionary;
     private final Deque<Integer> stack = new ArrayDeque<>();
 
     private final Runnable NOOP = () -> {
     };
-
 
     public Forth() {
         dictionary = new HashMap<>();
@@ -38,13 +40,13 @@ public class Forth {
 
         for (int i = 0; i < code.length(); i++) {
             char ch = code.charAt(i);
-            if (ch == ':') {
+            if (ch == START_WORD_DEFINITION) {
                 StringBuilder func = new StringBuilder();
                 do {
                     ch = code.charAt(i);
                     func.append(ch);
                     i++;
-                } while (ch != ';');
+                } while (ch != END_WORD_DEFINITION);
                 addWord(func.toString());
                 continue; // resume for-loop
             }
@@ -179,6 +181,11 @@ public class Forth {
         if (!expression) {
             throw new AssertionError(message);
         }
+    }
+
+    @Override
+    public String toString() {
+        return dictionary.keySet().toString();
     }
 
 
