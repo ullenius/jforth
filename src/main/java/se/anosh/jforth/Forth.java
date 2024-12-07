@@ -34,7 +34,8 @@ public final class Forth {
                 "mod", this::modulo,
                 "negate", this::negate,
                 "abs", this::abs,
-                "cr", this::cr
+                "cr", this::cr,
+                "2swap", this::_2swap
         ));
     }
 
@@ -184,6 +185,18 @@ public final class Forth {
         int n1 = stack.pop();
         stack.push(n2);
         stack.push(n1);
+    }
+
+    // ( d1 d2 -- d2 d1 )
+    private void _2swap() { // TODO refactor
+        int a = stack.pop();
+        int b = stack.pop();
+        int c = stack.pop();
+        int d = stack.pop();
+        stack.push(b);
+        stack.push(a);
+        stack.push(d);
+        stack.push(c);
     }
 
     // ( n -- n, n )

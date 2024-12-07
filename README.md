@@ -48,6 +48,7 @@ forth.interpret("dup . 4 assert"); // 4
 * Add `do loop`
 * Add conditionals `if else then`
 * Add string support
+* Add return stack support - `>R R>`
 
 ## Licence
 GPL-3.0-only

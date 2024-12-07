@@ -123,5 +123,12 @@ public class ForthTest {
         forth.interpret("255 assert");
     }
 
+    @Test
+    void doubleSwap() { // 2swap
+        forth.interpret("2 3 5 7 2swap");
+        forth.interpret("3 assert 2 assert 7 assert 5 assert"); // 5 7 2 3
+    }
+
+
 
 }
