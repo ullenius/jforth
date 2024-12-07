@@ -34,11 +34,20 @@ public class Forth {
     }
 
     public void interpret(String code) {
-
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < code.length(); i++) {
 
+        for (int i = 0; i < code.length(); i++) {
             char ch = code.charAt(i);
+            if (ch == ':') {
+                StringBuilder func = new StringBuilder();
+                do {
+                    ch = code.charAt(i);
+                    func.append(ch);
+                    i++;
+                } while (ch != ';');
+                addWord(func.toString());
+                continue; // resume for-loop
+            }
             if (ch == ' ') {
                 if (!sb.isEmpty()) {
                     interpretWord(sb.toString());
@@ -48,7 +57,18 @@ public class Forth {
             }
             sb.append(code.charAt(i));
         }
-        interpretWord(sb.toString());
+        if (!sb.isEmpty()) {
+            interpretWord(sb.toString()); // execute last word
+        }
+    }
+
+    private void addWord(String word) { // TODO refactor
+        int endNamePos = word.indexOf(" ", 2);
+        String name = word.substring(2, endNamePos);
+        //System.out.println("name:" + name);
+        String func = word.substring(endNamePos+1, word.lastIndexOf(" "));
+        //System.out.println(func);
+        dictionary.put(name, () -> interpret(func));
     }
 
     private void interpretWord(String word) {
@@ -57,11 +77,6 @@ public class Forth {
         } else {
             stack.push(Integer.parseInt(word));
         }
-    }
-
-    public void createFunc(String func) {
-
-
     }
 
     // + ( n1, n2 -- sum )
