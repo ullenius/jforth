@@ -105,4 +105,25 @@ public class ForthTest {
         forth.interpret("FOO dup . 420 assert");
     }
 
+    @Test
+    void negate() {
+        forth.interpret("42 negate");
+        forth.interpret("-42 assert");
+
+        forth.interpret("-128 negate");
+        forth.interpret("128 assert");
+    }
+
+    @Test
+    void abs() {
+        forth.interpret("-42 abs");
+        forth.interpret("42 assert");
+
+        forth.interpret("255 abs");
+        forth.interpret("255 assert");
+    }
+
+    // abs, negate, min, max
+
+
 }

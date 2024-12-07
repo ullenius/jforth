@@ -31,7 +31,9 @@ public final class Forth {
         dictionary.putAll(Map.of(
                 "*", this::multiply,
                 "/", this::division,
-                "mod", this::modulo
+                "mod", this::modulo,
+                "negate", this::negate,
+                "abs", this::abs
         ));
     }
 
@@ -80,6 +82,20 @@ public final class Forth {
         } else {
             stack.push(Integer.parseInt(word));
         }
+    }
+
+    // ( n -- n )
+    private void abs() {
+        int n = stack.pop();
+        int abs = Math.abs(n);
+        stack.push(abs);
+    }
+
+    // ( n -- n )
+    private void negate() {
+        int n = stack.pop();
+        int negated = Math.negateExact(n);
+        stack.push(negated);
     }
 
     // + ( n1, n2 -- sum )
