@@ -279,6 +279,15 @@ public class ForthTest {
         forth.interpret("-5 assert");
     }
 
+    @Test
+    void nonZeroDup() { // ?dup
+        forth.interpret("2 3 ?dup");
+        forth.interpret("3 assert 3 assert 2 assert");
+
+        forth.interpret("2 4 8 16 0 ?dup");
+        forth.interpret("0 assert 16 assert 8 assert 4 assert 2 assert");
+    }
+
 
     // TODO
     /*

@@ -59,7 +59,8 @@ public final class Forth {
                 "invert", this::invert,
                 "and", this::and,
                 "or", this::or,
-                "xor", this::xor
+                "xor", this::xor,
+                "?dup", this::_nonZeroDup
                 )
         );
     }
@@ -343,6 +344,16 @@ public final class Forth {
     private void dup() {
         int n = stack.peek();
         stack.push(n);
+    }
+
+    // ( n -- n, n ) or ( n -- n )
+    private void _nonZeroDup() { // ?dup
+        dup();
+        isZero();
+        int flag = stack.pop();
+        if (flag == FALSE) {
+            dup();
+        }
     }
 
     // ( actual, expected -- )
