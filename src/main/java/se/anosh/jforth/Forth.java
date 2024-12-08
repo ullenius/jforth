@@ -1,7 +1,6 @@
 package se.anosh.jforth;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public final class Forth {
 
@@ -10,6 +9,9 @@ public final class Forth {
 
     private static final int TRUE = -1;
     private static final int FALSE = 0;
+
+    private static final char START_COMMENT = '(';
+    private static final char END_COMMENT = ')';
 
     private final Map<String, Runnable> dictionary;
     private final Deque<Integer> stack = new ArrayDeque<>();
@@ -56,11 +58,11 @@ public final class Forth {
 
         ));
         dictionary.putAll(Map.of(
-                "invert", this::invert,
-                "and", this::and,
-                "or", this::or,
-                "xor", this::xor,
-                "?dup", this::_nonZeroDup
+                        "invert", this::invert,
+                        "and", this::and,
+                        "or", this::or,
+                        "xor", this::xor,
+                        "?dup", this::_nonZeroDup
                 )
         );
     }
@@ -77,6 +79,14 @@ public final class Forth {
                 addWord(compiledWord);
                 i += compiledWord.length();
                 continue; // resume for-loop
+            }
+            if (ch == START_COMMENT) { // ignore comments, BUG: words cannot start with '('
+                while (ch != END_COMMENT) {
+                    i++;
+                    ch = code.charAt(i);
+                }
+                i++; // skip ending ')'
+                ch = code.charAt(i);
             }
             if (ch == ' ') {
                 if (!sb.isEmpty()) {
@@ -106,9 +116,7 @@ public final class Forth {
     private void addWord(String word) { // TODO refactor
         int endNamePos = word.indexOf(" ", 2);
         String name = word.substring(2, endNamePos);
-        //System.out.println("name:" + name);
-        String func = word.substring(endNamePos+1, word.lastIndexOf(" "));
-        //System.out.println(func);
+        String func = word.substring(endNamePos + 1, word.lastIndexOf(" "));
         dictionary.put(name, () -> interpret(func));
     }
 

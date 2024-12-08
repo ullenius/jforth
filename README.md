@@ -6,7 +6,7 @@ Usage:
 ```java
 Forth forth = new Forth();
 
-forth.interpret(": squared dup * ;");
+forth.interpret(": squared ( n -- n ) dup * ;");
 forth.interpret("2 squared");
 forth.interpret("dup . 4 assert"); // 4
 ```
@@ -72,6 +72,7 @@ forth.interpret("dup . 4 assert"); // 4
 * Add conditionals `if else then`
 * Add string support
 * Add return stack support - `>R R>`
+* Add support for `\`-delimited comments
 
 ## Licence
 GPL-3.0-only

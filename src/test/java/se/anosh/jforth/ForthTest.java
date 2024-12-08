@@ -3,7 +3,6 @@ package se.anosh.jforth;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class ForthTest {
 
@@ -288,12 +287,15 @@ public class ForthTest {
         forth.interpret("0 assert 16 assert 8 assert 4 assert 2 assert");
     }
 
+    @Test
+    void parenthesisCommentsAreIgnored() {
+        forth.interpret(": cubed ( n -- n ) dup dup * * ;");
+        forth.interpret("5 cubed 125 assert");
+    }
+
 
     // TODO
     /*
-        # stack operations
-        ?dup duplicates only if n is non-zero
-
         # bitwise operators:
         lshift
         rshift
