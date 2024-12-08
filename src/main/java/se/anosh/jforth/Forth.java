@@ -73,13 +73,9 @@ public final class Forth {
             ch = ch == '\n' ? ' ' : ch; // treat newline as space
 
             if (ch == START_WORD_DEFINITION) {
-                StringBuilder func = new StringBuilder();
-                do {
-                    ch = code.charAt(i);
-                    func.append(ch);
-                    i++;
-                } while (ch != END_WORD_DEFINITION);
-                addWord(func.toString());
+                var compiledWord = parseCompileWord(code, i);
+                addWord(compiledWord);
+                i += compiledWord.length();
                 continue; // resume for-loop
             }
             if (ch == ' ') {
@@ -94,6 +90,17 @@ public final class Forth {
         if (!sb.isEmpty()) {
             interpretWord(sb.toString()); // execute last word
         }
+    }
+
+    private String parseCompileWord(String code, int i) {
+        StringBuilder func = new StringBuilder();
+        char ch;
+        do {
+            ch = code.charAt(i);
+            func.append(ch);
+            i++;
+        } while (ch != END_WORD_DEFINITION);
+        return func.toString();
     }
 
     private void addWord(String word) { // TODO refactor
