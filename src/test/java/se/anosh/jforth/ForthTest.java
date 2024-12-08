@@ -246,6 +246,20 @@ public class ForthTest {
         forth.interpret("true assert");
     }
 
+    @Test
+    void xor() {
+        forth.interpret("true true XOR");
+        forth.interpret("false assert");
+
+        forth.interpret("false false XOR");
+        forth.interpret("false assert");
+
+        forth.interpret("true false XOR");
+        forth.interpret("true assert");
+
+        forth.interpret("false true XOR");
+        forth.interpret("true assert");
+    }
 
     @Test
     void min() {
@@ -272,8 +286,6 @@ public class ForthTest {
         ?dup duplicates only if n is non-zero
 
         # bitwise operators:
-        or
-        xor
         lshift
         rshift
 

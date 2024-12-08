@@ -51,14 +51,15 @@ public final class Forth {
                 "0>", this::greaterThanZero,
                 "<", this::lessThan,
                 ">", this::greaterThan,
-                "invert", this::invert,
-                "and", this::and,
-                "or", this::or
+                "max", this::max,
+                "min", this::min
 
         ));
         dictionary.putAll(Map.of(
-                "max", this::max,
-                "min", this::min
+                "invert", this::invert,
+                "and", this::and,
+                "or", this::or,
+                "xor", this::xor
                 )
         );
     }
@@ -126,6 +127,13 @@ public final class Forth {
         int b = stack.pop();
         int max = Math.max(a, b);
         stack.push(max);
+    }
+
+    private void xor() {
+        int a = stack.pop();
+        int b = stack.pop();
+        int result = a ^ b;
+        stack.push(result);
     }
 
     // ( n1 n2 -- n )
