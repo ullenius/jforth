@@ -52,8 +52,14 @@ public final class Forth {
                 "<", this::lessThan,
                 ">", this::greaterThan,
                 "invert", this::invert,
-                "and", this::and
+                "and", this::and//,
+
         ));
+        dictionary.putAll(Map.of(
+                "max", this::max,
+                "min", this::min
+                )
+        );
     }
 
     public void interpret(String code) {
@@ -103,6 +109,22 @@ public final class Forth {
         } else {
             stack.push(Integer.parseInt(word));
         }
+    }
+
+    // ( n1 n2 -- n )
+    private void min() {
+        int a = stack.pop();
+        int b = stack.pop();
+        int min = Math.min(a, b);
+        stack.push(min);
+    }
+
+    // ( n1 n2 -- n )
+    private void max() {
+        int a = stack.pop();
+        int b = stack.pop();
+        int max = Math.max(a, b);
+        stack.push(max);
     }
 
     // ( n1, n2 -- n )

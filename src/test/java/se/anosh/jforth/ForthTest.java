@@ -230,6 +230,24 @@ public class ForthTest {
         forth.interpret("false assert");
     }
 
+    @Test
+    void min() {
+        forth.interpret("2 5 MIN");
+        forth.interpret("2 assert");
+
+        forth.interpret("-5 -42 MIN");
+        forth.interpret("-42 assert");
+    }
+
+    @Test
+    void max() {
+        forth.interpret("2 5 MAX");
+        forth.interpret("5 assert");
+
+        forth.interpret("-5 -42 MAX");
+        forth.interpret("-5 assert");
+    }
+
 
     // TODO
     /*
