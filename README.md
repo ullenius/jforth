@@ -6,17 +6,16 @@ Usage:
 ```java
 Forth forth = new Forth();
 
-forth.interpret(": squared dup * ; ");
+forth.interpret(": squared dup * ;");
 forth.interpret("2 squared");
 forth.interpret("dup . 4 assert"); // 4
 ```
 
-
 ## Supported words
-* .
-* .s
+* `.`
+* `.s`
 * cr
-* `: ;` \ word creation
+* `: ; \ word creation`
 
 ### Stack manoeuvres
 * dup
@@ -24,14 +23,39 @@ forth.interpret("dup . 4 assert"); // 4
 * over
 * rot
 * drop
+* 2swap
+* 2drop
+* `?dup \ non-zero dup`
 
 ### Maths
 * `+`
 * `-`
-* /
+* `*`
+* `/`
 * mod
 * negate
 * abs
+* max
+* min
+
+### Comparison operators
+* `=`
+* `<>`
+* `0=`
+* `0<`
+* `0>`
+* `<`
+* `>`
+
+## Bitwise operators
+* `invert ( n -- n ) \ bitwise NOT`
+* and
+* or
+* xor
+
+## Boolean
+* `true ( -- f ) \ -1`
+* `false ( -- f ) \ 0`
 
 ### Custom
 * assert `( actual expected -- ) \ assertEquals`
