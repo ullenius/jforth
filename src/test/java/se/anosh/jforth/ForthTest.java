@@ -215,6 +215,21 @@ public class ForthTest {
         forth.interpret("false assert");
     }
 
+    @Test
+    void and() { // bitwise AND &
+        forth.interpret("true true AND");
+        forth.interpret("true assert");
+
+        forth.interpret("false false AND");
+        forth.interpret("false assert");
+
+        forth.interpret("true false AND");
+        forth.interpret("false assert");
+
+        forth.interpret("false true AND");
+        forth.interpret("false assert");
+    }
+
 
     // TODO
     /*

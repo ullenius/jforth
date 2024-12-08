@@ -51,8 +51,8 @@ public final class Forth {
                 "0>", this::greaterThanZero,
                 "<", this::lessThan,
                 ">", this::greaterThan,
-                "invert", this::invert
-
+                "invert", this::invert,
+                "and", this::and
         ));
     }
 
@@ -103,6 +103,14 @@ public final class Forth {
         } else {
             stack.push(Integer.parseInt(word));
         }
+    }
+
+    // ( n1, n2 -- n )
+    private void and() {
+        int a = stack.pop();
+        int b = stack.pop();
+        int result = a & b;
+        stack.push(result);
     }
 
     // ( n1, n2 -- f )
