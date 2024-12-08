@@ -44,7 +44,9 @@ public final class Forth {
                 "false", this::addFalse
         ));
         dictionary.putAll(Map.of(
-                "=", this::equals
+                "=", this::equal,
+                "<>", this::notEquals,
+                "invert", this::invert
         ));
     }
 
@@ -95,6 +97,27 @@ public final class Forth {
         } else {
             stack.push(Integer.parseInt(word));
         }
+    }
+
+    // ( n, n -- f )
+    private void equal() { // =
+        int a = stack.pop();
+        int b = stack.pop();
+        int result = a == b ? TRUE : FALSE;
+        stack.push(result);
+    }
+
+    // ( n, n -- f)
+    private void notEquals() { // <>
+        equal();
+        invert();
+    }
+
+    // ( n -- n )
+    private void invert() { // bitwise ~
+        int n = stack.pop();
+        int inverted = ~n;
+        stack.push(inverted);
     }
 
     // ( n -- n )

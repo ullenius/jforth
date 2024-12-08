@@ -139,7 +139,20 @@ public class ForthTest {
     void equals() { // =
         forth.interpret("2 2 =");
         forth.interpret("true assert");
+
+        forth.interpret("8 16 =");
+        forth.interpret("false assert");
     }
+
+    @Test
+    void notEquals() { // <>
+        forth.interpret("64 128 <>");
+        forth.interpret("true assert");
+
+        forth.interpret("32 32 <>");
+        forth.interpret("false assert");
+    }
+
 
     @Test
     void trueAliasWorks() {
@@ -151,6 +164,14 @@ public class ForthTest {
         forth.interpret("0 false assert");
     }
 
+    @Test
+    void invertWorks() {
+        forth.interpret("true invert");
+        forth.interpret("false assert");
+
+        forth.interpret("false invert");
+        forth.interpret("true assert");
+    }
 
     // TODO
     /*
@@ -159,8 +180,6 @@ public class ForthTest {
         max
 
         # comparison
-        <>
-        =
         0=
         0<
         0>
