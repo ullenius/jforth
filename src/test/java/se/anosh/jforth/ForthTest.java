@@ -197,18 +197,30 @@ public class ForthTest {
         forth.interpret("false assert");
     }
 
+    @Test
+    void lessThan() {
+        forth.interpret("-1 2 <");
+        forth.interpret("true assert");
+
+        forth.interpret("32 16 <");
+        forth.interpret("false assert");
+    }
+
+    @Test
+    void greaterThan() {
+        forth.interpret("16 8 >");
+        forth.interpret("true assert");
+
+        forth.interpret("64 128 >");
+        forth.interpret("false assert");
+    }
+
 
     // TODO
     /*
         # maths
         min
         max
-
-        # comparison
-        <
-        >
-        <=
-        >=
 
         # bitwise operators:
         and

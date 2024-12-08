@@ -49,6 +49,8 @@ public final class Forth {
                 "0=", this::isZero,
                 "0<", this::lessThanZero,
                 "0>", this::greaterThanZero,
+                "<", this::lessThan,
+                ">", this::greaterThan,
                 "invert", this::invert
 
         ));
@@ -103,6 +105,21 @@ public final class Forth {
         }
     }
 
+    // ( n1, n2 -- f )
+    private void lessThan() {
+        int a = stack.pop();
+        int b = stack.pop();
+        int flag = b < a ? TRUE : FALSE;
+        stack.push(flag);
+    }
+
+    // ( n1, n2 -- f )
+    private void greaterThan() {
+        int a = stack.pop();
+        int b = stack.pop();
+        int flag = b > a ? TRUE : FALSE;
+        stack.push(flag);
+    }
 
     // ( n -- f)
     private void lessThanZero() {
@@ -140,18 +157,18 @@ public final class Forth {
     }
 
     // ( n -- n )
-    private void invert() { // bitwise ~
+    private void invert() { // bitwise NOT ~
         int n = stack.pop();
         int inverted = ~n;
         stack.push(inverted);
     }
 
-    // ( n -- n )
+    // ( -- f )
     private void addTrue() {
         stack.push(TRUE);
     }
 
-    // ( n -- n )
+    // ( -- f )
     private void addFalse() {
         stack.push(FALSE);
     }
