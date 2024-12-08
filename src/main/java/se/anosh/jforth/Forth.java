@@ -46,7 +46,11 @@ public final class Forth {
         dictionary.putAll(Map.of(
                 "=", this::equal,
                 "<>", this::notEquals,
+                "0=", this::isZero,
+                "0<", this::lessThanZero,
+                "0>", this::greaterThanZero,
                 "invert", this::invert
+
         ));
     }
 
@@ -97,6 +101,28 @@ public final class Forth {
         } else {
             stack.push(Integer.parseInt(word));
         }
+    }
+
+
+    // ( n -- f)
+    private void lessThanZero() {
+        int n = stack.pop();
+        int flag = n < 0 ? TRUE : FALSE;
+        stack.push(flag);
+    }
+
+    // ( n -- f)
+    private void greaterThanZero() {
+        int n = stack.pop();
+        int flag = n > 0 ? TRUE : FALSE;
+        stack.push(flag);
+    }
+
+    // ( n -- f )
+    private void isZero() {
+        int n = stack.pop();
+        int flag = n == 0 ? TRUE : FALSE;
+        stack.push(flag);
     }
 
     // ( n, n -- f )

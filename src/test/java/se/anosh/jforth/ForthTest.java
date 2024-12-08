@@ -173,6 +173,31 @@ public class ForthTest {
         forth.interpret("true assert");
     }
 
+    @Test
+    void isZero() {
+        forth.interpret("0 0=");
+        forth.interpret("true assert");
+    }
+
+    @Test
+    void greaterThanZero() {
+        forth.interpret("42 0>");
+        forth.interpret("true assert");
+
+        forth.interpret("-127 0>");
+        forth.interpret("false assert");
+    }
+
+    @Test
+    void lessThanZero() {
+        forth.interpret("-127 0<");
+        forth.interpret("true assert");
+
+        forth.interpret("255 0<");
+        forth.interpret("false assert");
+    }
+
+
     // TODO
     /*
         # maths
@@ -180,9 +205,6 @@ public class ForthTest {
         max
 
         # comparison
-        0=
-        0<
-        0>
         <
         >
         <=
