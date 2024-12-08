@@ -215,6 +215,7 @@ public class ForthTest {
         forth.interpret("false assert");
     }
 
+    // bitwise
     @Test
     void and() { // bitwise AND &
         forth.interpret("true true AND");
@@ -229,6 +230,22 @@ public class ForthTest {
         forth.interpret("false true AND");
         forth.interpret("false assert");
     }
+
+    @Test
+    void or() {
+        forth.interpret("true true OR");
+        forth.interpret("true assert");
+
+        forth.interpret("false false OR");
+        forth.interpret("false assert");
+
+        forth.interpret("true false OR");
+        forth.interpret("true assert");
+
+        forth.interpret("false true OR");
+        forth.interpret("true assert");
+    }
+
 
     @Test
     void min() {
@@ -251,12 +268,10 @@ public class ForthTest {
 
     // TODO
     /*
-        # maths
-        min
-        max
+        # stack operations
+        ?dup duplicates only if n is non-zero
 
         # bitwise operators:
-        and
         or
         xor
         lshift

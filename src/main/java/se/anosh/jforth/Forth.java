@@ -52,7 +52,8 @@ public final class Forth {
                 "<", this::lessThan,
                 ">", this::greaterThan,
                 "invert", this::invert,
-                "and", this::and//,
+                "and", this::and,
+                "or", this::or
 
         ));
         dictionary.putAll(Map.of(
@@ -127,8 +128,16 @@ public final class Forth {
         stack.push(max);
     }
 
+    // ( n1 n2 -- n )
+    private void or() { // bitwise OR
+        int a = stack.pop();
+        int b = stack.pop();
+        int result = a | b;
+        stack.push(result);
+    }
+
     // ( n1, n2 -- n )
-    private void and() {
+    private void and() { // bitwise AND
         int a = stack.pop();
         int b = stack.pop();
         int result = a & b;
