@@ -129,6 +129,60 @@ public class ForthTest {
         forth.interpret("3 assert 2 assert 7 assert 5 assert"); // 5 7 2 3
     }
 
+    @Test
+    void doubleDrop() {// 2drop
+        forth.interpret("2 3 5 7 2drop");
+        forth.interpret("3 assert 2 assert");
+    }
+
+    @Test
+    void equals() { // =
+        forth.interpret("2 2 =");
+        forth.interpret("true assert");
+    }
+
+    @Test
+    void trueAliasWorks() {
+        forth.interpret("-1 true assert");
+    }
+
+    @Test
+    void falseAliasWorks() {
+        forth.interpret("0 false assert");
+    }
+
+
+    // TODO
+    /*
+        # maths
+        min
+        max
+
+        # comparison
+        <>
+        =
+        0=
+        0<
+        0>
+        <
+        >
+        <=
+        >=
+
+        # bitwise operators:
+        and
+        or
+        xor
+        lshift
+        rshift
+
+        # double
+        2dup
+        2over
+     */
+
+
+
 
 
 }

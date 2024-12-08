@@ -8,6 +8,9 @@ public final class Forth {
     private static final char START_WORD_DEFINITION = ':';
     private static final char END_WORD_DEFINITION = ';';
 
+    private static final int TRUE = -1;
+    private static final int FALSE = 0;
+
     private final Map<String, Runnable> dictionary;
     private final Deque<Integer> stack = new ArrayDeque<>();
 
@@ -35,7 +38,13 @@ public final class Forth {
                 "negate", this::negate,
                 "abs", this::abs,
                 "cr", this::cr,
-                "2swap", this::_2swap
+                "2swap", this::_2swap,
+                "2drop", this::_2drop,
+                "true", this::addTrue,
+                "false", this::addFalse
+        ));
+        dictionary.putAll(Map.of(
+                "=", this::equals
         ));
     }
 
@@ -44,6 +53,8 @@ public final class Forth {
 
         for (int i = 0; i < code.length(); i++) {
             char ch = code.charAt(i);
+            ch = ch == '\n' ? ' ' : ch; // treat newline as space
+
             if (ch == START_WORD_DEFINITION) {
                 StringBuilder func = new StringBuilder();
                 do {
@@ -84,6 +95,16 @@ public final class Forth {
         } else {
             stack.push(Integer.parseInt(word));
         }
+    }
+
+    // ( n -- n )
+    private void addTrue() {
+        stack.push(TRUE);
+    }
+
+    // ( n -- n )
+    private void addFalse() {
+        stack.push(FALSE);
     }
 
     // ( -- )
@@ -197,6 +218,12 @@ public final class Forth {
         stack.push(a);
         stack.push(d);
         stack.push(c);
+    }
+
+    // ( n1 n2 -- )
+    private void _2drop() {
+        drop();
+        drop();
     }
 
     // ( n -- n, n )
