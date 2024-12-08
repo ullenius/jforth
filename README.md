@@ -1,10 +1,9 @@
 # jforth
-
 Simple Forth interpreter written in Java.
 
 Usage:
 
-```
+```java
 Forth forth = new Forth();
 
 forth.interpret(": squared dup * ; ");
@@ -17,7 +16,7 @@ forth.interpret("dup . 4 assert"); // 4
 * .
 * .s
 * cr
-* : ; \ word creation
+* `: ;` \ word creation
 
 ### Stack manoeuvres
 * dup
@@ -27,8 +26,8 @@ forth.interpret("dup . 4 assert"); // 4
 * drop
 
 ### Maths
-* +
-* -
+* `+`
+* `-`
 * /
 * mod
 * negate
